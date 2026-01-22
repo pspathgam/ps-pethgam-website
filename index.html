@@ -302,32 +302,3 @@
     </script>
 </body>
 </html>
-                                            </div>
-                        }
-
-        // PERFECT WORKING NAVIGATION
-        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                
-                // Update active link
-                document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                
-                // Switch sections
-                document.querySelectorAll('.content-section').forEach(section => {
-                    section.classList.add('hidden');
-                });
-                
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.remove('hidden');
-                    document.getElementById('page-title').textContent = link.textContent.trim().replace(/\(.*?\)/, '').trim();
-                }
-            });
-        });
-    </script>
-</body>
-</html>
-                                            
