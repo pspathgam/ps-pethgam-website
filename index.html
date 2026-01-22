@@ -333,467 +333,453 @@
         }
 
         // Login handlers
-        document.getElementById('adminForm').adl                                <small class="text-muted">Demo: t001 / teacher123</small>
-                            </div>
-                        </div>
 
-                        <!-- Student Login -->
-                        <div class="tab-pane fade" id="student-login">
-                            <form id="studentForm">
-                                <div class="mb-3">
-                                    <label class="form-label">Student ID</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-user-graduate"></i></span>
-                                        <input type="text" class="form-control" placeholder="s001" required>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Password</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="password" class="form-control" placeholder="••••••••" required>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-warning w-100 mb-2">Login as Student</button>
-                            </form>
-                            <div class="demo-credentials text-center">
-                                <small class="text-muted">Demo: s001 / student123</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+document.getElementById('adminForm').addEventListener('submit', (e) => {
 
-    <!-- MAIN DASHBOARD (Hidden initially) -->
-    <div id="mainApp" style="display: none;">
-        <!-- Role Badge -->
-        <div id="roleBadge" class="badge role-badge fs-6 shadow-lg px-3 py-2"></div>
+e.preventDefault();
 
-        <!-- Sidebar -->
-        <div class="sidebar d-flex flex-column p-3" id="sidebar">
-            <div class="text-center mb-4 pb-4 border-bottom">
-                <h4 class="mb-0"><i class="fas fa-school me-2"></i>GPS Pethgam Wagoora</h4>
-                <small id="roleTitle">Admin Panel</small>
-            </div>
-            <nav class="nav flex-column" id="sidebarNav">
-                <!-- Dynamic navigation populated by JS -->
-            </nav>
-        </div>
+login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
 
-        <!-- Main Content -->
-        <div class="content" id="main-content">
-            <header class="d-flex justify-content-between align-items-center mb-4">
-                <h2 id="page-title">Dashboard</h2>
-                <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown">
-                        <i class="fas fa-user-circle me-2"></i><span id="userName">Admin</span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" onclick="showProfile()">Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#" onclick="logout()">Logout</a></li>
-                    </ul>
-                </div>
-            </header>
+document.getElementById('teacherForm').addEventListener('submit', (e) => {
 
-            <!-- ADMIN DASHBOARD -->
-            <div id="adminContent">
-                <section id="dashboard" class="content-section">
-                    <div class="row mb-4">
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4">
-                                <i class="fas fa-users fa-3x mb-3 opacity-75"></i><h3>150</h3><p>Total Students</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--secondary), #059669);">
-                                <i class="fas fa-calendar-day fa-3x mb-3 opacity-75"></i><h3>98%</h3><p>Attendance Today</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--accent), #d97706);">
-                                <i class="fas fa-user-tie fa-3x mb-3 opacity-75"></i><h3>12</h3><p>Staff Members</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
-                                <i class="fas fa-comments fa-3x mb-3 opacity-75"></i><h3>245</h3><p>Messages Sent</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 mb-3">
-                            <div class="card"><div class="card-header">Attendance Trend</div><div class="card-body"><canvas id="attendanceChart"></canvas></div></div>
-                        </div>
-                    </div>
-                </section>
-                <!-- Other admin sections remain the same -->
-                <section id="communication" class="content-section hidden">
-                    <!-- Full communication section from original -->
-                    <!-- [Previous communication section code here - keeping it identical] -->
-                </section>
-            </div>
+e.preventDefault(); login('teacher', e.target.querySelector('input[type="text"]').value,
 
-            <!-- TEACHER DASHBOARD -->
-            <div id="teacherContent" style="display: none;">
-                <section id="teacher-dashboard" class="content-section admin-panel">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="card text-center p-4 admin-panel">
-                                <i class="fas fa-calendar-check fa-4x mb-3 text-success"></i>
-                                <h3>Mark Attendance</h3>
-                                <p>Class 2 - 35 Students</p>
-                                <button class="btn btn-success btn-lg">Start Marking</button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="card text-center p-4 admin-panel">
-                                <i class="fas fa-book fa-4x mb-3 text-primary"></i>
-                                <h3>Homework</h3>
-                                <p>Assign & Track</p>
-                                <button class="btn btn-primary btn-lg">Manage Homework</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+e.target.querySelector('input[type="password"]').value);
 
-            <!-- STUDENT DASHBOARD -->
-            <div id="studentContent" style="display: none;">
-                <section id="student-dashboard" class="content-section student-panel">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <div class="card text-center p-4 student-panel">
-                                <i class="fas fa-calendar-day fa-3x mb-3 text-info"></i>
-                                <h3>Attendance</h3>
-                                <h4 class="text-success">✅ Present</h4>
-                                <p>Today: Jan 22, 2026</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card text-center p-4 student-panel">
-                                <i class="fas fa-book fa-3x mb-3 text-warning"></i>
-                                <h3>Homework</h3>
-                                <h4>2 Pending</h4>
-                                <p>Due Tomorrow</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card text-center p-4 student-panel">
-                                <i class="fas fa-trophy fa-3x mb-3 text-danger"></i>
-                                <h3>Performance</h3>
-                                <h4>92%</h4>
-                                <p>Average Score</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-    </div>
+});
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // User credentials (demo data)
-        const users = {
-            admin: { id: 'admin123', password: 'admin123', role: 'admin', name: 'School Admin', color: 'bg-primary' },
-            teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success', class: 'Class 2' },
-            student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning', class: 'Class 2' }
-        };
+document.getElementById('studentForm').addEventListener('submit', (e) => {
 
-        let currentUser = null;
+e.preventDefault();
 
-        // Login handlers
-        document.getElementById('adminForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value);
-        });
+login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value);
 
-        document.getElementById('teacherForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            login('teacher', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value);
-        });
+});
 
-        document.getElementById('studentForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value);
-        });
+function login(type, id, password) {
 
-        function login(type, id, password) {
-            const user = users[type];
-            if (user && user.id === id && user.password === password) {
-                currentUser = user;
-                showDashboard();
-            } else {
-                alert('❌ Invalid credentials!');
-            }
+const user users [type];
+
+if (user && user.id = id && user.password == password) {
+
+currentUser { ...user };
+
+showDashboard();
+
+} else {
+
+alert('X Invalid credentials!');
+
+}
+
+}
+
+function showDashboard() {
+
+document.getElementById('loginScreen').style.display 'none';
+
+document.getElementById('mainApp').style.display = 'block';
+
+document.getElementById('roleBadge').textContent =
+
+currentUser.role.toUpperCase();
+
+document.getElementById('roleBadge').className badge
+
+${currentUser.color} role-badge fs-6 shadow-1g px-3 py-2;
+
+document.getElementById('roleTitle').textContent
+
+currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1) Panel';
+
+document.getElementById('userName').textContent currentUser.name;
+
+loadSidebar();
+
+showContentForRole();
+
+}
+
+// NEW: Change Password Functions
+
+function openChange PasswordModal() {
+
+document.getElementById('currentUserRole').value currentUser.role;
+
+document.getElementById('changePasswordForm').reset();
+
+document.getElementById('changePasswordModal').querySelectorAll('.is-
+
+valid, is-invalid').forEach(el => el.classList.remove('is-valid', 'is-invalid')); document.getElementById('successMessage').classList.add('d-none');
+
+new
+
+bootstrap.Modal(document.getElementById('changePasswordModal')).show(); }
         }
 
-        function showDashboard() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
-            
-            // Update role badge
-            const badge = document.getElementById('roleBadge');
-            badge.textContent = currentUser.role.toUpperCase();
-            badge.className = `badge ${currentUser.color} role-badge fs-6 shadow-lg px-3 py-2`;
-            
-            // Update header
-            document.getElementById('roleTitle').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1) + ' Panel';
-            document.getElementById('userName').textContent = currentUser.name;
-            
-            // Show role-specific content and sidebar
-            loadSidebar();
-            showContentForRole();
-        }
+function updatePasswordStrength() {
 
-        function loadSidebar() {
-            const sidebarNav = document.getElementById('sidebarNav');
-            const menus = {
-                admin: [
-                    { icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#dashboard' },
-                    { icon: 'fa-users', title: 'Students (150)', href: '#students' },
-                    { icon: 'fa-user-tie', title: 'Staff (12)', href: '#staff' },
-                    { icon: 'fa-comments', title: 'Communication', href: '#communication' },
-                    { icon: 'fa-cog', title: 'Settings', href: '#settings' }
-                ],
-                teacher: [
-                    { icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#teacher-dashboard' },
-                    { icon: 'fa-calendar-check', title: 'Attendance', href: '#teacher-attendance' },
-                    { icon: 'fa-book', title: 'Homework', href: '#teacher-homework' },
-                    { icon: 'fa-comments', title: 'Messages', href: '#teacher-messages' },
-                    { icon: 'fa-chart-bar', title: 'Reports', href: '#teacher-reports' }
-                ],
-                student: [
-                    { icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#student-dashboard' },
-                    { icon: 'fa-calendar-day', title: 'Attendance', href: '#student-attendance' },
-                    { icon: 'fa-book', title: 'Homework', href: '#student-homework' },
-                    { icon: 'fa-chart-line', title: 'Progress', href: '#student-progress' }
-                ]
-            };
+const password document.getElementById('newPassword').value;
 
-            sidebarNav.innerHTML = menus[currentUser.role].map(item => 
-                `<a class="nav-link ${item.href ==            <section id="add-student" class="content-section hidden">
-                <div class="card">
-                    <div class="card-header">Add New Student</div>
-                    <div class="card-body">
-                        <form id="studentForm">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Full Name *</label>
-                                    <input type="text" class="form-control" name="studentName" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Class</label>
-                                    <select class="form-select" name="class" required>
-                                        <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Parent Name</label>
-                                    <input type="text" class="form-control" name="parentName">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Parent Phone *</label>
-                                    <input type="tel" class="form-control" name="parentPhone" pattern="[0-9]{10}" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control" name="dob">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Student ID</label>
-                                    <input type="text" class="form-control" name="studentId" placeholder="Auto-generated">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-success"><i class="fas fa-plus me-2"></i>Add Student</button>
-                        </form>
-                    </div>
-                </div>
-            </section>
+const strengthBar document.getElementById('strengthBar');
 
-            <!-- ADD TEACHER SECTION -->
-            <section id="add-teacher" class="content-section hidden">
-                <div class="card">
-                    <div class="card-header">Add New Teacher</div>
-                    <div class="card-body">
-                        <form id="teacherForm">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Full Name *</label>
-                                    <input type="text" class="form-control" name="teacherName" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Subject(s)</label>
-                                    <input type="text" class="form-control" name="subjects" placeholder="Math, Science">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Phone *</label>
-                                    <input type="tel" class="form-control" name="phone" pattern="[0-9]{10}" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" class="form-control" name="email">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Class Teacher For</label>
-                                    <select class="form-select" name="classTeacher">
-                                        <option>-</option><option>1st</option><option>2nd</option><option>3rd</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-success"><i class="fas fa-plus me-2"></i>Add Teacher</button>
-                        </form>
-                    </div>
-                </div>
-            </section>
+const strengthText = document.getElementById('strengthText');
 
-            <!-- STUDENT LOGIN DASHBOARD -->
-            <section id="student-dashboard" class="content-section hidden">
-                <div class="card">
-                    <div class="card-header">Welcome <span id="studentNameDisplay"></span>!</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="card text-center p-4" style="background: linear-gradient(135deg, var(--secondary), #059669); color: white;">
-                                    <i class="fas fa-calendar-day fa-3x mb-3"></i><h3>Today</h3><p>Attendance</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="card text-center p-4" style="background: linear-gradient(135deg, var(--accent), #d97706); color: white;">
-                                    <i class="fas fa-book fa-3x mb-3"></i><h3>Homework</h3><p>Pending</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="card text-center p-4" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white;">
-                                    <i class="fas fa-comments fa-3x mb-3"></i><h3>Messages</h3><p>From School</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+let strength = 0;
 
-            <!-- Communication Section (Previous) -->
-            <section id="communication" class="content-section hidden">
-                <div class="row mb-4">
-                    <div class="col-md-3 mb-3">
-                        <div class="card text-center p-4" style="background: linear-gradient(135deg, #8b5cf6, #a78bfa); color: white;">
-                            <i class="fas fa-mobile-alt fa-3x mb-3"></i><h3>₹45.20</h3><p>SMS Balance</p>
-                        </div>
-                    </div>
-                    <!-- Rest of communication cards -->
-                </div>
-            </section>
+let color '#dc3545';
 
-            <!-- Other sections remain same -->
-            <section id="students" class="content-section hidden"><div class="card"><div class="card-header">Students</div><div class="card-body">Students list...</div></div></section>
-            <section id="staff" class="content-section hidden"><div class="card"><div class="card-header">Teachers</div><div class="card-body">Teachers list...</div></div></section>
-        </div>
-    </div>
+if (password.length >= 6) strength += 25;
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Demo Users Database
-        const users = {
-            admin: { id: 'admin', password: 'admin', name: 'School Admin', role: 'admin' },
-            teacher1: { id: 'teacher1', password: '123', name: 'John Teacher', role: 'teacher' },
-            student1: { id: 'student1', password: '123', name: 'Ahmed Khan', role: 'student', class: '1st' }
-        };
-        let currentUser = null;
+if (/[A-Z]/.test(password)) strength += 25;
 
-        // Login System
-        function login() {
-            const userType = document.getElementById('userType').value;
-            const id = document.getElementById('loginId').value;
-            const pass = document.getElementById('loginPass').value;
-            
-            const userKey = userType === 'admin' ? id : `${userType}${id}`;
-            if (users[userKey] && users[userKey].password === pass && users[userKey].role === userType) {
-                currentUser = users[userKey];
-                document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                document.getElementById('userName').textContent = currentUser.name;
-                document.getElementById('userRole').textContent = currentUser.role.toUpperCase();
-                document.getElementById('studentNameDisplay').textContent = currentUser.name;
-                
-                if (currentUser.role === 'student') {
-                    showStudentView();
-                } else {
-                    showAdminView();
-                }
-            } else {
-                alert('Invalid credentials! Demo: admin/admin, teacher1/123, student1/123');
-            }
-        }
+if (/[0-9]/.test(password)) strength += 25;
 
-        function logout() {
-            currentUser = null;
-            document.getElementById('mainApp').style.display = 'none';
-            document.getElementById('loginOverlay').style.display = 'flex';
-            document.getElementById('userBadge').classList.add('d-none');
-        }
+if (/[^A-Za-z0-9]/.test(password)) strength += 25;
 
-        function showAdminView() {
-            document.getElementById('adminNav').style.display = 'block';
-            document.querySelector('[href="#student-dashboard"]').style.display = 'none';
-            showSection('dashboard');
-        }
+strengthBar.style.width = strength + '%';
 
-        function showStudentView() {
-            document.getElementById('adminNav').style.display = 'none';
-            showSection('student-dashboard');
-        }
+if (strength >= 75) {
 
-        // Navigation
-        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.remove('hidden');
-                    document.getElementById('page-title').textContent = link.textContent.trim().replace(/\(.*?\)/, '').trim();
-                }
-            });
-        });
+strengthText.textContent = 'Strong';
 
-        // Add Student Form
-        document.getElementById('studentForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const studentData = Object.fromEntries(formData);
-            studentData.id = 'STU' + Date.now().toString().slice(-5);
-            alert(`✅ Student "${studentData.studentName}" (ID: ${studentData.id}) added successfully!`);
-            e.target.reset();
-        });
+color='#198754';
 
-        // Add Teacher Form
-        document.getElementById('teacherForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const teacherData = Object.fromEntries(formData);
-            teacherData.id = 'TCH' + Date.now().toString().slice(-5);
-            alert(`✅ Teacher "${teacherData.teacherName}" (ID: ${teacherData.id}) added successfully!`);
-            e.target.reset();
-        });
+} else if (strength >= 50) {
 
-        function showSection(id) {
-            document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
-        }
+strengthText.textContent = 'Good';
 
-        // Enter to login
-        document.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && document.getElementById('loginOverlay').style.display !== 'none') {
-                login();
-            }
-        });
-    </script>
+color='#ffc107';
+
+} else if (strength >= 25) {
+
+strengthText.textContent = 'Fair';
+
+color='#fd7e14';
+
+} else {
+
+}
+
+strengthText.textContent = 'Weak';
+
+color='#dc3545';
+
+strengthBar.style.backgroundColor = color;
+
+}
+
+function changePassword() {
+
+const currentPassword = document.getElementById('currentPassword').value;
+
+const newPassword document.getElementById('newPassword').value;
+
+const confirmPassword = document.getElementById('confirmPassword').value;
+
+// Validation
+
+if (currentPassword !== currentUser.password) {
+
+document.getElementById('currentPassword').classList.add('is-
+
+return showError('currentPassword');
+
+invalid');
+
+}
+
+if (newPassword.length < 6) {
+
+document.getElementById('newPassword').classList.add('is-invalid');
+
+return showError('newPassword');
+
+    }
+    if (newPassword.length < 6) {
+
+document.getElementById('newPassword').classList.add('is-invalid');
+
+return showError('newPassword');
+
+}
+
+if (newPassword !== confirmPassword) {
+
+document.getElementById('confirmPassword').classList.add('is-
+
+invalid');
+
+}
+
+return showError('confirmPassword');
+
+// Update password
+
+users [currentUser.role].password newPassword;
+
+currentUser.password newPassword;
+
+saveUsers();
+
+// Show success
+
+document.getElementById('successMessage').classList.remove('d-none');
+
+document.getElementById('changePasswordModal').querySelector('.btn-
+
+close').click();
+
+// Reset form
+
+setTimeout(() => {
+
+document.getElementById('change PasswordForm').reset();
+
+document.getElementById('successMessage').classList.add('d-none');
+
+}, 2000);
+
+alert('✔ Password changed successfully!');
+
+}
+
+function showError (fieldId) {
+
+document.querySelectorAll('.form-control').forEach(el =>
+
+el.classList.remove('is-invalid'));
+
+document.getElementById(fieldId).classList.add('is-invalid'); }
+
+// Event listeners for real-time validation
+
+document.getElementById('newPassword').addEventListener('input',
+
+updatePasswordStrength);
+
+document.getElementById('confirmPassword').addEventListener('input',
+
+function() {
+
+const newPass document.getElementById('newPassword').value;
+
+const confirmPass this.value;
+
+this.classList.toggle('is-invalid', newPass && newPass != confirmPass);
+
+}); this.classList.toggle('is-valid', newPass && newPass === confirmPass);
+
+function loadSidebar() {
+
+const sidebarNav document.getElementById('sidebarNav');
+
+const menus {
+
+admin: [
+
+{ icon: 'fa-tachometer-alt', title: 'Dashboard', href:
+
+'#dashboard' },
+
+{ icon: 'fa-users', title: 'Students (150)', href: '#students' },
+
+{ icon: 'fa-user-tie', title: 'Staff (12)', href: '#staff' },
+
+{ icon: 'fa-comments', title: 'Communication', href:
+
+'#communication'},
+
+{ icon: 'fa-cog', title: 'Settings', href: '#settings' }
+
+1,
+
+teacher: [
+{ icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#teacher-dashboard' },
+
+{ icon: 'fa-calendar-check', title: 'Attendance', href: '#teacher-attendance' },
+
+{ icon: 'fa-book', title: 'Homework', href: '#teacher-homeworks'
+
+},
+
+{ icon: 'fa-comments', title: 'Messages', href: '#teacher-messages"},
+
+{ icon: 'fa-chart-bar', title: 'Reports', href: '#teacher-reports'
+
+}
+
+student: [
+
+{ icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#student-
+
+dashboard'],
+
+{ icon: 'fa-calendar-day', title: 'Attendance', href: '#student-
+
+attendance },
+
+{ icon: 'fa-book', title: 'Homework', href: '#student-homework'],
+
+{ icon: 'fa-chart-line', title: 'Progress', href: '#student-
+
+progress' }
+]
+};
+
+sidebarNav.innerHTML = menus [currentUser.role).map(item =>
+
+<a class="nav-link ${item.href === (currentUser.role === 'admin'?
+
+#dashboard': '#${currentUser.role}-dashboard) ? 'active': ''}"
+href="${item.href}">
+ <i class="fas ${item.icon) me-2"></i>${item.title}
+
+</a>
+
+).join('');
+
+attachNavigationListeners();
+
+function showContent For Role() {
+
+document.getElementById('adminContent').style.display currentUser.role
+
+=== 'admin'? 'block': 'none';
+
+document.getElementById('teacherContent').style.display= currentUser.role
+
+=== 'teacher'? 'block': 'none';
+
+document.getElementById('studentContent').style.display= currentUser.role
+
+=== 'student'? 'block': 'none';
+
+}
+
+function attachNavigationListeners() {
+
+document.querySelectorAll('#sidebar .nav-link').forEach(link => {
+
+link.addEventListener('click', (e) => {
+
+e.preventDefault();
+
+const targetId link.getAttribute('href').substring(1);
+
+document.querySelectorAll('#sidebar .nav-link').forEach(1 =>
+
+1.classList.remove('active'));
+
+link.classList.add('active');
+
+if (currentUser.role === 'admin') {
+
+document.querySelectorAll('#adminContent .content-
+
+section').forEach(section => section.classList.add('hidden'));
+
+const targetSection document.getElementById(targetId);
+
+if (targetSection) {
+
+targetSection.classList.remove('hidden');
+
+document.getElementById('page-title').textContent =
+    link.textContent.trim().replace(/\(.*?\)/, '').trim();
+
+}
+
+} else {
+
+document.getElementById('page-title').textContent =
+
+link.textContent.trim();
+
+}
+
+});
+
+});
+
+}
+
+function logout() {
+
+currentUser = null;
+
+document.getElementById('mainApp').style.display = 'none';
+
+document.getElementById('loginScreen').style.display= 'flex';
+
+document.querySelector('#loginTabs .nav-link.active').click();
+
+}
+
+function showProfile() {
+
+const info
+
+${currentUser.name}\n Role:
+
+${currentUser.role.toUpperCase()}\n${currentUser.role === 'teacher'?'
+
+${currentUser.class}: ''}';
+
+}
+
+alert(info);
+
+// Initialize charts
+
+function initCharts() {
+
+const ctx = document.getElementById('attendanceChart')?.getContext('2d');
+
+if (ctx) {
+
+new Chart(ctx, {
+
+type: 'line',
+
+data: {
+
+labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
+datasets: [{
+
+label: 'Attendance %',
+
+data: [95,98,92,97,99,96],
+
+borderColor: rgb(16,185,129)',
+
+backgroundColor: 'rgba(16,185,129,0.1)',
+
+tension: 0.4,
+
+fill: true
+
+}]
+
+},
+
+options: {
+
+responsive: true,
+
+scales: {y: { beginAtZero: true, max: 100}}
+
+}
+
+});
+
+}
+
+}
+
+document.addEventListener('DOMContentLoaded', initCharts);
+
+</script>
 </body>
 </html>
