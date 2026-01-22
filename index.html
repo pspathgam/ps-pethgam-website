@@ -50,7 +50,6 @@
     </style>
 </head>
 <body>
-    <!-- LOGIN SCREEN (Default) -->
     <div id="loginScreen" class="login-container">
         <div class="login-card">
             <div class="card shadow-lg">
@@ -66,7 +65,6 @@
                         <li class="nav-item"><a class="nav-link" href="#student-login" data-bs-toggle="tab">👦 Student</a></li>
                     </ul>
                     <div class="tab-content p-4">
-                        <!-- Admin Login -->
                         <div class="tab-pane fade show active" id="admin-login">
                             <form id="adminForm">
                                 <div class="mb-3">
@@ -84,13 +82,10 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100 mb-2">Login as Admin</button>
+                                <div class="text-end"><a href="#" class="text-decoration-none small" onclick="openForgotModal('admin')">Forgot Password?</a></div>
                             </form>
-                            <div class="demo-credentials text-center">
-                                <small class="text-muted">Demo: admin123 / admin123</small>
-                            </div>
                         </div>
 
-                        <!-- Teacher Login -->
                         <div class="tab-pane fade" id="teacher-login">
                             <form id="teacherForm">
                                 <div class="mb-3">
@@ -108,13 +103,10 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success w-100 mb-2">Login as Teacher</button>
+                                <div class="text-end"><a href="#" class="text-decoration-none small" onclick="openForgotModal('teacher')">Forgot Password?</a></div>
                             </form>
-                            <div class="demo-credentials text-center">
-                                <small class="text-muted">Demo: t001 / teacher123</small>
-                            </div>
                         </div>
 
-                        <!-- Student Login -->
                         <div class="tab-pane fade" id="student-login">
                             <form id="studentForm">
                                 <div class="mb-3">
@@ -132,10 +124,8 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-warning w-100 mb-2">Login as Student</button>
+                                <div class="text-end"><a href="#" class="text-decoration-none small" onclick="openForgotModal('student')">Forgot Password?</a></div>
                             </form>
-                            <div class="demo-credentials text-center">
-                                <small class="text-muted">Demo: s001 / student123</small>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,7 +133,33 @@
         </div>
     </div>
 
-    <!-- CHANGE PASSWORD MODAL -->
+    <div class="modal fade change-password-modal" id="forgotPasswordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-undo me-2"></i>Reset Password</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="forgotPasswordForm">
+                        <p class="text-muted small">Enter your User ID to receive a password reset link.</p>
+                        <div class="mb-3">
+                            <label class="form-label" id="forgotIdLabel">User ID</label>
+                            <input type="text" class="form-control" id="forgotUserId" required>
+                        </div>
+                        <div class="alert alert-info" id="forgotInfo">
+                            Recovery instructions will be sent to the registered mobile/email.
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="handleForgotPassword()">Send Reset Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade change-password-modal" id="changePasswordModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -163,7 +179,6 @@
                             <label class="form-label">New Password</label>
                             <input type="password" class="form-control" id="newPassword" required minlength="6">
                             <div class="form-text">Minimum 6 characters</div>
-                            <div class="invalid-feedback">Password must be at least 6 characters!</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Confirm New Password</label>
@@ -191,23 +206,15 @@
         </div>
     </div>
 
-    <!-- MAIN DASHBOARD (Hidden initially) -->
     <div id="mainApp" style="display: none;">
-        <!-- Role Badge -->
         <div id="roleBadge" class="badge role-badge fs-6 shadow-lg px-3 py-2"></div>
-
-        <!-- Sidebar -->
         <div class="sidebar d-flex flex-column p-3" id="sidebar">
             <div class="text-center mb-4 pb-4 border-bottom">
                 <h4 class="mb-0"><i class="fas fa-school me-2"></i>GPS Pethgam Wagoora</h4>
                 <small id="roleTitle">Admin Panel</small>
             </div>
-            <nav class="nav flex-column" id="sidebarNav">
-                <!-- Dynamic navigation populated by JS -->
-            </nav>
+            <nav class="nav flex-column" id="sidebarNav"></nav>
         </div>
-
-        <!-- Main Content -->
         <div class="content" id="main-content">
             <header class="d-flex justify-content-between align-items-center mb-4">
                 <h2 id="page-title">Dashboard</h2>
@@ -223,29 +230,12 @@
                     </ul>
                 </div>
             </header>
-
-            <!-- ADMIN DASHBOARD -->
             <div id="adminContent">
                 <section id="dashboard" class="content-section">
                     <div class="row mb-4">
                         <div class="col-md-3 mb-3">
                             <div class="card stat-card text-center p-4">
                                 <i class="fas fa-users fa-3x mb-3 opacity-75"></i><h3>150</h3><p>Total Students</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--secondary), #059669);">
-                                <i class="fas fa-calendar-day fa-3x mb-3 opacity-75"></i><h3>98%</h3><p>Attendance Today</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--accent), #d97706);">
-                                <i class="fas fa-user-tie fa-3x mb-3 opacity-75"></i><h3>12</h3><p>Staff Members</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
-                                <i class="fas fa-comments fa-3x mb-3 opacity-75"></i><h3>245</h3><p>Messages Sent</p>
                             </div>
                         </div>
                     </div>
@@ -256,60 +246,14 @@
                     </div>
                 </section>
             </div>
-
-            <!-- TEACHER DASHBOARD -->
             <div id="teacherContent" style="display: none;">
                 <section id="teacher-dashboard" class="content-section admin-panel">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="card text-center p-4 admin-panel">
-                                <i class="fas fa-calendar-check fa-4x mb-3 text-success"></i>
-                                <h3>Mark Attendance</h3>
-                                <p>Class 2 - 35 Students</p>
-                                <button class="btn btn-success btn-lg">Start Marking</button>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="card text-center p-4 admin-panel">
-                                <i class="fas fa-book fa-4x mb-3 text-primary"></i>
-                                <h3>Homework</h3>
-                                <p>Assign & Track</p>
-                                <button class="btn btn-primary btn-lg">Manage Homework</button>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="card p-4">Teacher Dashboard Loaded</div>
                 </section>
             </div>
-
-            <!-- STUDENT DASHBOARD -->
             <div id="studentContent" style="display: none;">
                 <section id="student-dashboard" class="content-section student-panel">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <div class="card text-center p-4 student-panel">
-                                <i class="fas fa-calendar-day fa-3x mb-3 text-info"></i>
-                                <h3>Attendance</h3>
-                                <h4 class="text-success">✅ Present</h4>
-                                <p>Today: Jan 22, 2026</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card text-center p-4 student-panel">
-                                <i class="fas fa-book fa-3x mb-3 text-warning"></i>
-                                <h3>Homework</h3>
-                                <h4>2 Pending</h4>
-                                <p>Due Tomorrow</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card text-center p-4 student-panel">
-                                <i class="fas fa-trophy fa-3x mb-3 text-danger"></i>
-                                <h3>Performance</h3>
-                                <h4>92%</h4>
-                                <p>Average Score</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="card p-4">Student Dashboard Loaded</div>
                 </section>
             </div>
         </div>
@@ -317,469 +261,170 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // User credentials (demo data) - NOW PERSISTENT ACROSS SESSIONS
         const defaultUsers = {
             admin: { id: 'admin123', password: 'admin123', role: 'admin', name: 'School Admin', color: 'bg-primary' },
-            teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success', class: 'Class 2' },
-            student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning', class: 'Class 2' }
+            teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success' },
+            student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning' }
         };
 
-        let currentUser = null;
         let users = JSON.parse(localStorage.getItem('schoolUsers')) || { ...defaultUsers };
+        let currentUser = null;
 
-        // Save users to localStorage whenever changed
-        function saveUsers() {
-            localStorage.setItem('schoolUsers', JSON.stringify(users));
+        function saveUsers() { localStorage.setItem('schoolUsers', JSON.stringify(users)); }
+
+        // Login Logic
+        document.getElementById('adminForm').addEventListener('submit', (e) => { e.preventDefault(); login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
+        document.getElementById('teacherForm').addEventListener('submit', (e) => { e.preventDefault(); login('teacher', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
+        document.getElementById('studentForm').addEventListener('submit', (e) => { e.preventDefault(); login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
+
+        function login(type, id, password) {
+            const user = users[type];
+            if (user && user.id === id && user.password === password) {
+                currentUser = { ...user };
+                showDashboard();
+            } else { alert('Invalid credentials!'); }
         }
 
-        // Login handlers
-
-document.getElementById('adminForm').addEventListener('submit', (e) => {
-
-e.preventDefault();
-
-login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-
-document.getElementById('teacherForm').addEventListener('submit', (e) => {
-
-e.preventDefault(); login('teacher', e.target.querySelector('input[type="text"]').value,
-
-e.target.querySelector('input[type="password"]').value);
-
-});
-
-document.getElementById('studentForm').addEventListener('submit', (e) => {
-
-e.preventDefault();
-
-login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value);
-
-});
-
-function login(type, id, password) {
-
-const user users [type];
-
-if (user && user.id = id && user.password == password) {
-
-currentUser { ...user };
-
-showDashboard();
-
-} else {
-
-alert('X Invalid credentials!');
-
-}
-
-}
-
-function showDashboard() {
-
-document.getElementById('loginScreen').style.display 'none';
-
-document.getElementById('mainApp').style.display = 'block';
-
-document.getElementById('roleBadge').textContent =
-
-currentUser.role.toUpperCase();
-
-document.getElementById('roleBadge').className badge
-
-${currentUser.color} role-badge fs-6 shadow-1g px-3 py-2;
-
-document.getElementById('roleTitle').textContent
-
-currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1) Panel';
-
-document.getElementById('userName').textContent currentUser.name;
-
-loadSidebar();
-
-showContentForRole();
-
-}
-
-// NEW: Change Password Functions
-
-function openChange PasswordModal() {
-
-document.getElementById('currentUserRole').value currentUser.role;
-
-document.getElementById('changePasswordForm').reset();
-
-document.getElementById('changePasswordModal').querySelectorAll('.is-
-
-valid, is-invalid').forEach(el => el.classList.remove('is-valid', 'is-invalid')); document.getElementById('successMessage').classList.add('d-none');
-
-new
-
-bootstrap.Modal(document.getElementById('changePasswordModal')).show(); }
+        // Forgot Password Logic
+        function openForgotModal(role) {
+            document.getElementById('forgotIdLabel').textContent = role.charAt(0).toUpperCase() + role.slice(1) + " ID";
+            new bootstrap.Modal(document.getElementById('forgotPasswordModal')).show();
         }
 
-function updatePasswordStrength() {
-
-const password document.getElementById('newPassword').value;
-
-const strengthBar document.getElementById('strengthBar');
-
-const strengthText = document.getElementById('strengthText');
-
-let strength = 0;
-
-let color '#dc3545';
-
-if (password.length >= 6) strength += 25;
-
-if (/[A-Z]/.test(password)) strength += 25;
-
-if (/[0-9]/.test(password)) strength += 25;
-
-if (/[^A-Za-z0-9]/.test(password)) strength += 25;
-
-strengthBar.style.width = strength + '%';
-
-if (strength >= 75) {
-
-strengthText.textContent = 'Strong';
-
-color='#198754';
-
-} else if (strength >= 50) {
-
-strengthText.textContent = 'Good';
-
-color='#ffc107';
-
-} else if (strength >= 25) {
-
-strengthText.textContent = 'Fair';
-
-color='#fd7e14';
-
-} else {
-
-}
-
-strengthText.textContent = 'Weak';
-
-color='#dc3545';
-
-strengthBar.style.backgroundColor = color;
-
-}
-
-function changePassword() {
-
-const currentPassword = document.getElementById('currentPassword').value;
-
-const newPassword document.getElementById('newPassword').value;
-
-const confirmPassword = document.getElementById('confirmPassword').value;
-
-// Validation
-
-if (currentPassword !== currentUser.password) {
-
-document.getElementById('currentPassword').classList.add('is-
-
-return showError('currentPassword');
-
-invalid');
-
-}
-
-if (newPassword.length < 6) {
-
-document.getElementById('newPassword').classList.add('is-invalid');
-
-return showError('newPassword');
-
-    }
-    if (newPassword.length < 6) {
-
-document.getElementById('newPassword').classList.add('is-invalid');
-
-return showError('newPassword');
-
-}
-
-if (newPassword !== confirmPassword) {
-
-document.getElementById('confirmPassword').classList.add('is-
-
-invalid');
-
-}
-
-return showError('confirmPassword');
-
-// Update password
-
-users [currentUser.role].password newPassword;
-
-currentUser.password newPassword;
-
-saveUsers();
-
-// Show success
-
-document.getElementById('successMessage').classList.remove('d-none');
-
-document.getElementById('changePasswordModal').querySelector('.btn-
-
-close').click();
-
-// Reset form
-
-setTimeout(() => {
-
-document.getElementById('change PasswordForm').reset();
-
-document.getElementById('successMessage').classList.add('d-none');
-
-}, 2000);
-
-alert('✔ Password changed successfully!');
-
-}
-
-function showError (fieldId) {
-
-document.querySelectorAll('.form-control').forEach(el =>
-
-el.classList.remove('is-invalid'));
-
-document.getElementById(fieldId).classList.add('is-invalid'); }
-
-// Event listeners for real-time validation
-
-document.getElementById('newPassword').addEventListener('input',
-
-updatePasswordStrength);
-
-document.getElementById('confirmPassword').addEventListener('input',
-
-function() {
-
-const newPass document.getElementById('newPassword').value;
-
-const confirmPass this.value;
-
-this.classList.toggle('is-invalid', newPass && newPass != confirmPass);
-
-}); this.classList.toggle('is-valid', newPass && newPass === confirmPass);
-
-function loadSidebar() {
-
-const sidebarNav document.getElementById('sidebarNav');
-
-const menus {
-
-admin: [
-
-{ icon: 'fa-tachometer-alt', title: 'Dashboard', href:
-
-'#dashboard' },
-
-{ icon: 'fa-users', title: 'Students (150)', href: '#students' },
-
-{ icon: 'fa-user-tie', title: 'Staff (12)', href: '#staff' },
-
-{ icon: 'fa-comments', title: 'Communication', href:
-
-'#communication'},
-
-{ icon: 'fa-cog', title: 'Settings', href: '#settings' }
-
-1,
-
-teacher: [
-{ icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#teacher-dashboard' },
-
-{ icon: 'fa-calendar-check', title: 'Attendance', href: '#teacher-attendance' },
-
-{ icon: 'fa-book', title: 'Homework', href: '#teacher-homeworks'
-
-},
-
-{ icon: 'fa-comments', title: 'Messages', href: '#teacher-messages"},
-
-{ icon: 'fa-chart-bar', title: 'Reports', href: '#teacher-reports'
-
-}
-
-student: [
-
-{ icon: 'fa-tachometer-alt', title: 'Dashboard', href: '#student-
-
-dashboard'],
-
-{ icon: 'fa-calendar-day', title: 'Attendance', href: '#student-
-
-attendance },
-
-{ icon: 'fa-book', title: 'Homework', href: '#student-homework'],
-
-{ icon: 'fa-chart-line', title: 'Progress', href: '#student-
-
-progress' }
-]
-};
-
-sidebarNav.innerHTML = menus [currentUser.role).map(item =>
-
-<a class="nav-link ${item.href === (currentUser.role === 'admin'?
-
-#dashboard': '#${currentUser.role}-dashboard) ? 'active': ''}"
-href="${item.href}">
- <i class="fas ${item.icon) me-2"></i>${item.title}
-
-</a>
-
-).join('');
-
-attachNavigationListeners();
-
-function showContent For Role() {
-
-document.getElementById('adminContent').style.display currentUser.role
-
-=== 'admin'? 'block': 'none';
-
-document.getElementById('teacherContent').style.display= currentUser.role
-
-=== 'teacher'? 'block': 'none';
-
-document.getElementById('studentContent').style.display= currentUser.role
-
-=== 'student'? 'block': 'none';
-
-}
-
-function attachNavigationListeners() {
-
-document.querySelectorAll('#sidebar .nav-link').forEach(link => {
-
-link.addEventListener('click', (e) => {
-
-e.preventDefault();
-
-const targetId link.getAttribute('href').substring(1);
-
-document.querySelectorAll('#sidebar .nav-link').forEach(1 =>
-
-1.classList.remove('active'));
-
-link.classList.add('active');
-
-if (currentUser.role === 'admin') {
-
-document.querySelectorAll('#adminContent .content-
-
-section').forEach(section => section.classList.add('hidden'));
-
-const targetSection document.getElementById(targetId);
-
-if (targetSection) {
-
-targetSection.classList.remove('hidden');
-
-document.getElementById('page-title').textContent =
-    link.textContent.trim().replace(/\(.*?\)/, '').trim();
-
-}
-
-} else {
-
-document.getElementById('page-title').textContent =
-
-link.textContent.trim();
-
-}
-
-});
-
-});
-
-}
-
-function logout() {
-
-currentUser = null;
-
-document.getElementById('mainApp').style.display = 'none';
-
-document.getElementById('loginScreen').style.display= 'flex';
-
-document.querySelector('#loginTabs .nav-link.active').click();
-
-}
-
-function showProfile() {
-
-const info
-
-${currentUser.name}\n Role:
-
-${currentUser.role.toUpperCase()}\n${currentUser.role === 'teacher'?'
-
-${currentUser.class}: ''}';
-
-}
-
-alert(info);
-
-// Initialize charts
-
-function initCharts() {
-
-const ctx = document.getElementById('attendanceChart')?.getContext('2d');
-
-if (ctx) {
-
-new Chart(ctx, {
-
-type: 'line',
-
-data: {
-
-labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-
-datasets: [{
-
-label: 'Attendance %',
-
-data: [95,98,92,97,99,96],
-
-borderColor: rgb(16,185,129)',
-
-backgroundColor: 'rgba(16,185,129,0.1)',
-
-tension: 0.4,
-
-fill: true
-
-}]
-
-},
-
-options: {
-
-responsive: true,
-
-scales: {y: { beginAtZero: true, max: 100}}
-
-}
-
-});
-
-}
-
-}
-
-document.addEventListener('DOMContentLoaded', initCharts);
-
-</script>
+        function handleForgotPassword() {
+            const id = document.getElementById('forgotUserId').value;
+            if(id) {
+                alert('A reset link has been sent to the contact info associated with ID: ' + id);
+                bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            document.getElementById('roleBadge').textContent = currentUser.role.toUpperCase();
+            document.getElementById('roleBadge').className = `badge ${currentUser.color} role-badge fs-6 shadow-lg px-3 py-2`;
+            document.getElementById('userName').textContent = currentUser.name;
+            showContentForRole();
+            initCharts();
+        }
+
+        function showContentForRole() {
+            document.getElementById('adminContent').style.display = currentUser.role === 'admin' ? 'block' : 'none';
+            document.getElementById('teacherContent').style.display = currentUser.role === 'teacher' ? 'block' : 'none';
+            document.getElementById('studentContent').style.display = currentUser.role === 'student' ? 'block' : 'none';
+        }
+
+        function openChangePasswordModal() {
+            document.getElementById('currentUserRole').value = currentUser.role;
+            new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
+        }
+
+        function changePassword() {
+            const curr = document.get
+                
+                
+                
+                
+                
+                            </div>
+            <div id="studentContent" style="display: none;">
+                <section id="student-dashboard" class="content-section student-panel">
+                    <div class="card p-4">Student Dashboard Loaded</div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const defaultUsers = {
+            admin: { id: 'admin123', password: 'admin123', role: 'admin', name: 'School Admin', color: 'bg-primary' },
+            teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success' },
+            student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning' }
+        };
+
+        let users = JSON.parse(localStorage.getItem('schoolUsers')) || { ...defaultUsers };
+        let currentUser = null;
+
+        function saveUsers() { localStorage.setItem('schoolUsers', JSON.stringify(users)); }
+
+        // Login Logic
+        document.getElementById('adminForm').addEventListener('submit', (e) => { e.preventDefault(); login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
+        document.getElementById('teacherForm').addEventListener('submit', (e) => { e.preventDefault(); login('teacher', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
+        document.getElementById('studentForm').addEventListener('submit', (e) => { e.preventDefault(); login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
+
+        function login(type, id, password) {
+            const user = users[type];
+            if (user && user.id === id && user.password === password) {
+                currentUser = { ...user };
+                showDashboard();
+            } else { alert('Invalid credentials!'); }
+        }
+
+        // Forgot Password Logic
+        function openForgotModal(role) {
+            document.getElementById('forgotIdLabel').textContent = role.charAt(0).toUpperCase() + role.slice(1) + " ID";
+            new bootstrap.Modal(document.getElementById('forgotPasswordModal')).show();
+        }
+
+        function handleForgotPassword() {
+            const id = document.getElementById('forgotUserId').value;
+            if(id) {
+                alert('A reset link has been sent to the contact info associated with ID: ' + id);
+                bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            document.getElementById('roleBadge').textContent = currentUser.role.toUpperCase();
+            document.getElementById('roleBadge').className = `badge ${currentUser.color} role-badge fs-6 shadow-lg px-3 py-2`;
+            document.getElementById('userName').textContent = currentUser.name;
+            showContentForRole();
+            initCharts();
+        }
+
+        function showContentForRole() {
+            document.getElementById('adminContent').style.display = currentUser.role === 'admin' ? 'block' : 'none';
+            document.getElementById('teacherContent').style.display = currentUser.role === 'teacher' ? 'block' : 'none';
+            document.getElementById('studentContent').style.display = currentUser.role === 'student' ? 'block' : 'none';
+        }
+
+        function openChangePasswordModal() {
+            document.getElementById('currentUserRole').value = currentUser.role;
+            new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
+        }
+
+        function changePassword() {
+            const curr = document.getElementById('currentPassword').value;
+            const newVal = document.getElementById('newPassword').value;
+            if(curr === currentUser.password && newVal.length >= 6) {
+                users[currentUser.role].password = newVal;
+                currentUser.password = newVal;
+                saveUsers();
+                alert('Password Updated!');
+                bootstrap.Modal.getInstance(document.getElementById('changePasswordModal')).hide();
+            } else {
+                alert('Check your inputs!');
+            }
+        }
+
+        function logout() { location.reload(); }
+
+        function initCharts() {
+            const ctx = document.getElementById('attendanceChart')?.getContext('2d');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                        datasets: [{ label: 'Attendance %', data: [95, 98, 92, 97, 99, 96], borderColor: '#10b981', tension: 0.4 }]
+                    }
+                });
+            }
+        }
+    </script>
 </body>
 </html>
