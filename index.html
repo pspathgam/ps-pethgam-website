@@ -41,16 +41,62 @@
     </div>
 
     <!-- Main Content -->
-    <div class="content">
-        <header class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Welcome, Admin</h2>
-            <div class="dropdown">
-                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-circle me-2"></i>Profile</button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul>
+    <div class="content" id="main-content">
+    <!-- Header stays the same -->
+    <header class="d-flex justify-content-between align-items-center mb-4">
+        <h2 id="page-title">Dashboard</h2>
+        <!-- Dropdown stays the same -->
+    </header>
+
+    <!-- Stats and Charts for Dashboard (existing code here) -->
+
+    <!-- Hidden Sections - Add after the existing tables/charts -->
+    <section id="students" class="content-section" style="display: none;">
+        <div class="card">
+            <div class="card-header">Students Management</div>
+            <div class="card-body">
+                <p>Student list, admissions, and profiles go here. Total: 150 students.</p>
+                <!-- Add student table similar to recent students -->
+                <button class="btn btn-primary">Add New Student</button>
             </div>
-        </header>
+        </div>
+    </section>
+
+    <section id="staff" class="content-section" style="display: none;">
+        <div class="card">
+            <div class="card-header">Staff Directory</div>
+            <div class="card-body">
+                <p>12 staff members listed. Manage profiles and schedules.</p>
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Role</th></tr></thead>
+                    <tbody><tr><td>John Teacher</td><td>Class Teacher</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="attendance" class="content-section" style="display: none;">
+        <div class="card">
+            <div class="card-header">Daily Attendance</div>
+            <div class="card-body">
+                <p>Mark attendance for today. Current: 98%.</p>
+                <!-- Add form or table for marking attendance -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Repeat for Fees, Exams, Settings with unique IDs and sample content -->
+    <section id="fees" class="content-section" style="display: none;">
+        <div class="card"><div class="card-header">Fee Management</div><div class="card-body"><p>45 pending fees. Track collections.</p></div></div>
+    </section>
+    <section id="exams" class="content-section" style="display: none;">
+        <div class="card"><div class="card-header">Exam Results</div><div class="card-body"><p>Upload marks and generate reports.</p></div></div>
+    </section>
+    <section id="settings" class="content-section" style="display: none;">
+        <div class="card"><div class="card-header">School Settings</div><div class="card-body"><p>Update profiles, holidays, etc.</p></div></div>
+    </section>
+</div>
+
 
         <!-- Stats Cards -->
         <div class="row mb-4">
@@ -153,6 +199,37 @@
             },
             options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
         });
+        // Functional Sidebar Navigation
+document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        
+        // Extract section ID from href or text (update hrefs in HTML to match: e.g., href="#students")
+        const targetId = link.getAttribute('href') ? link.getAttribute('href').substring(1) : link.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+        
+        // Hide all sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        // Show target section
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            targetSection.style.display = 'block';
+            document.getElementById('page-title').textContent = link.textContent.trim().replace(/(\d+)/, '').trim(); // Update title
+        }
+        
+        // Fade-in animation (optional CSS transition)
+        targetSection.style.opacity = '0';
+        targetSection.style.transition = 'opacity 0.3s';
+        setTimeout(() => targetSection.style.opacity = '1', 10);
+    });
+});
+        
     </script>
 </body>
 </html>
