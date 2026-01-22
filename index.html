@@ -11,7 +11,7 @@
         :root { --primary: #2563eb; --secondary: #10b981; --accent: #f59e0b; --bg: #f8fafc; }
         body { background: linear-gradient(135deg, var(--bg), #e2e8f0); font-family: 'Segoe UI', sans-serif; }
         .sidebar { background: linear-gradient(180deg, var(--primary), #1d4ed8); color: white; height: 100vh; position: fixed; width: 250px; }
-        .sidebar .nav-link { color: rgba(255,255,255,0.8); padding: 12px 20px; border-radius: 8px; margin: 5px 10px; transition: all 0.3s; }
+        .sidebar .nav-link { color: rgba(255,255,255,0.8); padding: 12px 20px; border-radius: 8px; margin: 5px 10px; transition: all 0.3s; cursor: pointer; }
         .sidebar .nav-link:hover, .sidebar .nav-link.active { background: rgba(255,255,255,0.2); color: white; transform: translateX(5px); }
         .content { margin-left: 250px; padding: 20px; }
         .card { border: none; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; transition: transform 0.3s; }
@@ -20,6 +20,8 @@
         .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
         .btn-primary { background: var(--accent); border: none; border-radius: 10px; padding: 10px 20px; }
         .table { border-radius: 10px; overflow: hidden; }
+        .content-section { opacity: 1; transition: opacity 0.3s ease-in-out; }
+        .content-section.hidden { display: none !important; opacity: 0; }
     </style>
 </head>
 <body>
@@ -30,206 +32,265 @@
             <small>Admin Panel</small>
         </div>
         <nav class="nav flex-column">
-            <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-            <a class="nav-link" href="#"><i class="fas fa-users me-2"></i>Students (150)</a>
-            <a class="nav-link" href="#"><i class="fas fa-user-tie me-2"></i>Staff (12)</a>
-            <a class="nav-link" href="#"><i class="fas fa-calendar-check me-2"></i>Attendance</a>
-            <a class="nav-link" href="#"><i class="fas fa-rupee-sign me-2"></i>Fees</a>
-            <a class="nav-link" href="#"><i class="fas fa-book me-2"></i>Exams</a>
-            <a class="nav-link" href="#"><i class="fas fa-cog me-2"></i>Settings</a>
+            <a class="nav-link active" href="#dashboard"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+            <a class="nav-link" href="#students"><i class="fas fa-users me-2"></i>Students (150)</a>
+            <a class="nav-link" href="#staff"><i class="fas fa-user-tie me-2"></i>Staff (12)</a>
+            <a class="nav-link" href="#attendance"><i class="fas fa-calendar-check me-2"></i>Attendance</a>
+            <a class="nav-link" href="#fees"><i class="fas fa-rupee-sign me-2"></i>Fees</a>
+            <a class="nav-link" href="#exams"><i class="fas fa-book me-2"></i>Exams</a>
+            <a class="nav-link" href="#settings"><i class="fas fa-cog me-2"></i>Settings</a>
         </nav>
     </div>
 
     <!-- Main Content -->
     <div class="content" id="main-content">
-    <!-- Header stays the same -->
-    <header class="d-flex justify-content-between align-items-center mb-4">
-        <h2 id="page-title">Dashboard</h2>
-        <!-- Dropdown stays the same -->
-    </header>
-
-    <!-- Stats and Charts for Dashboard (existing code here) -->
-
-    <!-- Hidden Sections - Add after the existing tables/charts -->
-    <section id="students" class="content-section" style="display: none;">
-        <div class="card">
-            <div class="card-header">Students Management</div>
-            <div class="card-body">
-                <p>Student list, admissions, and profiles go here. Total: 150 students.</p>
-                <!-- Add student table similar to recent students -->
-                <button class="btn btn-primary">Add New Student</button>
+        <header class="d-flex justify-content-between align-items-center mb-4">
+            <h2 id="page-title">Dashboard</h2>
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-circle me-2"></i>Profile</button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
             </div>
-        </div>
-    </section>
+        </header>
 
-    <section id="staff" class="content-section" style="display: none;">
-        <div class="card">
-            <div class="card-header">Staff Directory</div>
-            <div class="card-body">
-                <p>12 staff members listed. Manage profiles and schedules.</p>
-                <table class="table">
-                    <thead><tr><th>Name</th><th>Role</th></tr></thead>
-                    <tbody><tr><td>John Teacher</td><td>Class Teacher</td></tr></tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <section id="attendance" class="content-section" style="display: none;">
-        <div class="card">
-            <div class="card-header">Daily Attendance</div>
-            <div class="card-body">
-                <p>Mark attendance for today. Current: 98%.</p>
-                <!-- Add form or table for marking attendance -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Repeat for Fees, Exams, Settings with unique IDs and sample content -->
-    <section id="fees" class="content-section" style="display: none;">
-        <div class="card"><div class="card-header">Fee Management</div><div class="card-body"><p>45 pending fees. Track collections.</p></div></div>
-    </section>
-    <section id="exams" class="content-section" style="display: none;">
-        <div class="card"><div class="card-header">Exam Results</div><div class="card-body"><p>Upload marks and generate reports.</p></div></div>
-    </section>
-    <section id="settings" class="content-section" style="display: none;">
-        <div class="card"><div class="card-header">School Settings</div><div class="card-body"><p>Update profiles, holidays, etc.</p></div></div>
-    </section>
-</div>
-
-
-        <!-- Stats Cards -->
-        <div class="row mb-4">
-            <div class="col-md-3 mb-3">
-                <div class="card stat-card text-center p-4">
-                    <div class="card-body">
-                        <i class="fas fa-users fa-3x mb-3 opacity-75"></i>
-                        <h3>150</h3>
-                        <p>Total Students</p>
+        <!-- DASHBOARD SECTION (Visible by default) -->
+        <section id="dashboard" class="content-section">
+            <!-- Stats Cards -->
+            <div class="row mb-4">
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card text-center p-4">
+                        <div class="card-body">
+                            <i class="fas fa-users fa-3x mb-3 opacity-75"></i>
+                            <h3>150</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--secondary), #059669);">
+                        <i class="fas fa-calendar-day fa-3x mb-3 opacity-75"></i>
+                        <h3>98%</h3>
+                        <p>Attendance Today</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--accent), #d97706);">
+                        <i class="fas fa-user-tie fa-3x mb-3 opacity-75"></i>
+                        <h3>12</h3>
+                        <p>Staff Members</p>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                        <i class="fas fa-chart-line fa-3x mb-3 opacity-75"></i>
+                        <h3>45</h3>
+                        <p>Pending Fees</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 mb-3">
-                <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--secondary), #059669);">
-                    <i class="fas fa-calendar-day fa-3x mb-3 opacity-75"></i>
-                    <h3>98%</h3>
-                    <p>Attendance Today</p>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, var(--accent), #d97706);">
-                    <i class="fas fa-user-tie fa-3x mb-3 opacity-75"></i>
-                    <h3>12</h3>
-                    <p>Staff Members</p>
-                </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card stat-card text-center p-4" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
-                    <i class="fas fa-chart-line fa-3x mb-3 opacity-75"></i>
-                    <h3>45</h3>
-                    <p>Pending Fees</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- Charts and Tables -->
-        <div class="row">
-            <div class="col-md-8 mb-3">
-                <div class="card">
-                    <div class="card-header">Attendance Trend (Last 7 Days)</div>
-                    <div class="card-body">
-                        <canvas id="attendanceChart"></canvas>
+            <!-- Charts and Recent Activity -->
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <div class="card">
+                        <div class="card-header">Attendance Trend (Last 7 Days)</div>
+                        <div class="card-body">
+                            <canvas id="attendanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-header">Recent Activity</div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Student admitted</li>
+                                <li class="mb-2"><i class="fas fa-user-check text-primary me-2"></i>Attendance marked</li>
+                                <li class="mb-2"><i class="fas fa-file-invoice text-warning me-2"></i>Fee paid</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-header">Recent Activity</div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Student admitted</li>
-                            <li class="mb-2"><i class="fas fa-user-check text-primary me-2"></i>Attendance marked</li>
-                            <li class="mb-2"><i class="fas fa-file-invoice text-warning me-2"></i>Fee paid</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <span>Recent Students</span>
-                        <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-1"></i>Add Student</button>
-                    </div>
-                    <div class="card-body p-0">
-                        <table class="table table-hover mb-0">
-                            <thead class="table-light">
-                                <tr><th>ID</th><th>Name</th><th>Class</th><th>Status</th><th>Action</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>001</td><td>Ahmed Khan</td><td>1st</td><td><span class="badge bg-success">Present</span></td><td><i class="fas fa-edit text-primary"></i></td></tr>
-                                <tr><td>002</td><td>Fatima Begum</td><td>2nd</td><td><span class="badge bg-danger">Absent</span></td><td><i class="fas fa-edit text-primary"></i></td></tr>
-                                <!-- Add more rows as needed -->
-                            </tbody>
-                        </table>
+            <!-- Recent Students Table -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <span>Recent Students</span>
+                            <button class="btn btn-primary btn-sm"><i class="fas fa-plus me-1"></i>Add Student</button>
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr><th>ID</th><th>Name</th><th>Class</th><th>Status</th><th>Action</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>001</td><td>Ahmed Khan</td><td>1st</td><td><span class="badge bg-success">Present</span></td><td><i class="fas fa-edit text-primary"></i></td></tr>
+                                    <tr><td>002</td><td>Fatima Begum</td><td>2nd</td><td><span class="badge bg-danger">Absent</span></td><td><i class="fas fa-edit text-primary"></i></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- STUDENTS SECTION -->
+        <section id="students" class="content-section hidden">
+            <div class="card">
+                <div class="card-header">Students Management <span class="badge bg-primary ms-2">150 Total</span></div>
+                <div class="card-body">
+                    <button class="btn btn-primary mb-3"><i class="fas fa-plus me-2"></i>Add New Student</button>
+                    <table class="table table-hover">
+                        <thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Parent</th><th>Status</th></tr></thead>
+                        <tbody>
+                            <tr><td>001</td><td>Ahmed Khan</td><td>1st</td><td>M. Khan</td><td><span class="badge bg-success">Active</span></td></tr>
+                            <tr><td>002</td><td>Fatima Begum</td><td>2nd</td><td>A. Begum</td><td><span class="badge bg-warning">Pending</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAFF SECTION -->
+        <section id="staff" class="content-section hidden">
+            <div class="card">
+                <div class="card-header">Staff Directory <span class="badge bg-secondary ms-2">12 Total</span></div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead><tr><th>Name</th><th>Role</th><th>Subject</th><th>Phone</th></tr></thead>
+                        <tbody>
+                            <tr><td>John Teacher</td><td>Class Teacher</td><td>Math</td><td>123-456</td></tr>
+                            <tr><td>Jane Doe</td><td>Headmaster</td><td>-</td><td>789-012</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTENDANCE SECTION -->
+        <section id="attendance" class="content-section hidden">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Today's Attendance <span class="badge bg-success ms-2">98%</span></div>
+                        <div class="card-body">
+                            <select class="form-select mb-3">
+                                <option>Class 1</option>
+                                <option>Class 2</option>
+                            </select>
+                            <button class="btn btn-success w-100">Mark Attendance</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Quick Stats</div>
+                        <div class="card-body">
+                            <p><strong>Present:</strong> 147</p>
+                            <p><strong>Absent:</strong> 3</p>
+                            <p><strong>Leave:</strong> 0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEES SECTION -->
+        <section id="fees" class="content-section hidden">
+            <div class="card">
+                <div class="card-header">Fee Management <span class="badge bg-warning ms-2">45 Pending</span></div>
+                <div class="card-body">
+                    <p>Total Collected: ₹1,20,000 | Pending: ₹15,000</p>
+                    <button class="btn btn-primary">Generate Fee Report</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXAMS SECTION -->
+        <section id="exams" class="content-section hidden">
+            <div class="card">
+                <div class="card-header">Exam Results</div>
+                <div class="card-body">
+                    <p>Upload marksheets and generate progress reports.</p>
+                    <input type="file" class="form-control mb-3">
+                    <button class="btn btn-primary">Upload Results</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS SECTION -->
+        <section id="settings" class="content-section hidden">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">School Info</div>
+                        <div class="card-body">
+                            <p>Govt Primary School Pethgam Wagoora</p>
+                            <button class="btn btn-outline-primary">Edit Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Holidays</div>
+                        <div class="card-body">
+                            <p>Upcoming: Republic Day (Jan 26)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Attendance Chart
-        const ctx = document.getElementById('attendanceChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                datasets: [{
-                    label: 'Attendance %',
-                    data: [95, 98, 92, 97, 99, 96],
-                    borderColor: 'rgb(16, 185, 129)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
-        });
-        // Functional Sidebar Navigation
-document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        // Remove active class from all links
-        document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        
-        // Extract section ID from href or text (update hrefs in HTML to match: e.g., href="#students")
-        const targetId = link.getAttribute('href') ? link.getAttribute('href').substring(1) : link.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-        
-        // Hide all sections
-        document.querySelectorAll('.content-section').forEach(section => {
-            section.style.display = 'none';
-        });
-        
-        // Show target section
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-            targetSection.style.display = 'block';
-            document.getElementById('page-title').textContent = link.textContent.trim().replace(/(\d+)/, '').trim(); // Update title
+        // Chart.js
+        const ctx = document.getElementById('attendanceChart')?.getContext('2d');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                    datasets: [{
+                        label: 'Attendance %',
+                        data: [95, 98, 92, 97, 99, 96],
+                        borderColor: 'rgb(16, 185, 129)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+            });
         }
-        
-        // Fade-in animation (optional CSS transition)
-        targetSection.style.opacity = '0';
-        targetSection.style.transition = 'opacity 0.3s';
-        setTimeout(() => targetSection.style.opacity = '1', 10);
-    });
-});
-        
+
+        // PERFECT WORKING NAVIGATION
+        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                
+                // Update active link
+                document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Switch sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                    document.getElementById('page-title').textContent = link.textContent.trim().replace(/\(.*?\)/, '').trim();
+                }
+            });
+        });
     </script>
 </body>
 </html>
+                                            
