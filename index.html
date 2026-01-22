@@ -261,170 +261,93 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const defaultUsers = {
-            admin: { id: 'admin123', password: 'admin123', role: 'admin', name: 'School Admin', color: 'bg-primary' },
-            teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success' },
-            student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning' }
-        };
+    // 1. FIXED DATA STRUCTURE
+    const defaultUsers = {
+        admin: { id: 'admin123', password: 'admin123', role: 'admin', name: 'School Admin', color: 'bg-primary' },
+        teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success' },
+        student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning' }
+    };
 
-        let users = JSON.parse(localStorage.getItem('schoolUsers')) || { ...defaultUsers };
-        let currentUser = null;
+    // 2. LOAD DATA (OR RESET IF BROKEN)
+    let users;
+    try {
+        const saved = localStorage.getItem('schoolUsers');
+        users = saved ? JSON.parse(saved) : { ...defaultUsers };
+    } catch (e) {
+        users = { ...defaultUsers };
+    }
+    
+    let currentUser = null;
 
-        function saveUsers() { localStorage.setItem('schoolUsers', JSON.stringify(users)); }
+    function saveUsers() {
+        localStorage.setItem('schoolUsers', JSON.stringify(users));
+    }
 
-        // Login Logic
-        document.getElementById('adminForm').addEventListener('submit', (e) => { e.preventDefault(); login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-        document.getElementById('teacherForm').addEventListener('submit', (e) => { e.preventDefault(); login('teacher', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-        document.getElementById('studentForm').addEventListener('submit', (e) => { e.preventDefault(); login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-
-        function login(type, id, password) {
-            const user = users[type];
-            if (user && user.id === id && user.password === password) {
-                currentUser = { ...user };
-                showDashboard();
-            } else { alert('Invalid credentials!'); }
+    // 3. FIXED LOGIN FUNCTION (Corrected Syntax)
+    function login(type, id, password) {
+        const user = users[type];
+        if (user && user.id === id && user.password === password) {
+            currentUser = { ...user };
+            showDashboard();
+        } else {
+            alert('❌ Login Failed! Use demo: ' + (type === 'admin' ? 'admin123 / admin123' : 'check credentials'));
         }
+    }
 
-        // Forgot Password Logic
-        function openForgotModal(role) {
-            document.getElementById('forgotIdLabel').textContent = role.charAt(0).toUpperCase() + role.slice(1) + " ID";
-            new bootstrap.Modal(document.getElementById('forgotPasswordModal')).show();
+    // Attach Listeners properly
+    document.getElementById('adminForm').onsubmit = (e) => {
+        e.preventDefault();
+        const inputs = e.target.querySelectorAll('input');
+        login('admin', inputs[0].value, inputs[1].value);
+    };
+
+    document.getElementById('teacherForm').onsubmit = (e) => {
+        e.preventDefault();
+        const inputs = e.target.querySelectorAll('input');
+        login('teacher', inputs[0].value, inputs[1].value);
+    };
+
+    document.getElementById('studentForm').onsubmit = (e) => {
+        e.preventDefault();
+        const inputs = e.target.querySelectorAll('input');
+        login('student', inputs[0].value, inputs[1].value);
+    };
+
+    // 4. EMERGENCY RESET FOR ANDROID USERS
+    // Run this if you are locked out
+    function emergencyReset() {
+        if(confirm("Reset all passwords to default?")) {
+            localStorage.clear();
+            location.reload();
         }
+    }
 
-        function handleForgotPassword() {
-            const id = document.getElementById('forgotUserId').value;
-            if(id) {
-                alert('A reset link has been sent to the contact info associated with ID: ' + id);
-                bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
-            }
-        }
+    // 5. DASHBOARD DISPLAY LOGIC
+    function showDashboard() {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'block';
+        document.getElementById('roleBadge').textContent = currentUser.role.toUpperCase();
+        document.getElementById('roleBadge').className = `badge ${currentUser.color} role-badge fs-6 shadow-lg px-3 py-2`;
+        document.getElementById('userName').textContent = currentUser.name;
+        showContentForRole();
+    }
 
-        function showDashboard() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
-            document.getElementById('roleBadge').textContent = currentUser.role.toUpperCase();
-            document.getElementById('roleBadge').className = `badge ${currentUser.color} role-badge fs-6 shadow-lg px-3 py-2`;
-            document.getElementById('userName').textContent = currentUser.name;
-            showContentForRole();
-            initCharts();
-        }
+    function showContentForRole() {
+        document.getElementById('adminContent').style.display = currentUser.role === 'admin' ? 'block' : 'none';
+        document.getElementById('teacherContent').style.display = currentUser.role === 'teacher' ? 'block' : 'none';
+        document.getElementById('studentContent').style.display = currentUser.role === 'student' ? 'block' : 'none';
+    }
 
-        function showContentForRole() {
-            document.getElementById('adminContent').style.display = currentUser.role === 'admin' ? 'block' : 'none';
-            document.getElementById('teacherContent').style.display = currentUser.role === 'teacher' ? 'block' : 'none';
-            document.getElementById('studentContent').style.display = currentUser.role === 'student' ? 'block' : 'none';
-        }
+    function logout() {
+        location.reload();
+    }
+</script>
 
-        function openChangePasswordModal() {
-            document.getElementById('currentUserRole').value = currentUser.role;
-            new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
-        }
-
-        function changePassword() {
-            const curr = document.get
-                
-                
-                
-                
-                
-                            </div>
-            <div id="studentContent" style="display: none;">
-                <section id="student-dashboard" class="content-section student-panel">
-                    <div class="card p-4">Student Dashboard Loaded</div>
-                </section>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const defaultUsers = {
-            admin: { id: 'admin123', password: 'admin123', role: 'admin', name: 'School Admin', color: 'bg-primary' },
-            teacher: { id: 't001', password: 'teacher123', role: 'teacher', name: 'Mr. Ahmed Khan', color: 'bg-success' },
-            student: { id: 's001', password: 'student123', role: 'student', name: 'Rahul Sharma', color: 'bg-warning' }
-        };
-
-        let users = JSON.parse(localStorage.getItem('schoolUsers')) || { ...defaultUsers };
-        let currentUser = null;
-
-        function saveUsers() { localStorage.setItem('schoolUsers', JSON.stringify(users)); }
-
-        // Login Logic
-        document.getElementById('adminForm').addEventListener('submit', (e) => { e.preventDefault(); login('admin', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-        document.getElementById('teacherForm').addEventListener('submit', (e) => { e.preventDefault(); login('teacher', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-        document.getElementById('studentForm').addEventListener('submit', (e) => { e.preventDefault(); login('student', e.target.querySelector('input[type="text"]').value, e.target.querySelector('input[type="password"]').value); });
-
-        function login(type, id, password) {
-            const user = users[type];
-            if (user && user.id === id && user.password === password) {
-                currentUser = { ...user };
-                showDashboard();
-            } else { alert('Invalid credentials!'); }
-        }
-
-        // Forgot Password Logic
-        function openForgotModal(role) {
-            document.getElementById('forgotIdLabel').textContent = role.charAt(0).toUpperCase() + role.slice(1) + " ID";
-            new bootstrap.Modal(document.getElementById('forgotPasswordModal')).show();
-        }
-
-        function handleForgotPassword() {
-            const id = document.getElementById('forgotUserId').value;
-            if(id) {
-                alert('A reset link has been sent to the contact info associated with ID: ' + id);
-                bootstrap.Modal.getInstance(document.getElementById('forgotPasswordModal')).hide();
-            }
-        }
-
-        function showDashboard() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'block';
-            document.getElementById('roleBadge').textContent = currentUser.role.toUpperCase();
-            document.getElementById('roleBadge').className = `badge ${currentUser.color} role-badge fs-6 shadow-lg px-3 py-2`;
-            document.getElementById('userName').textContent = currentUser.name;
-            showContentForRole();
-            initCharts();
-        }
-
-        function showContentForRole() {
-            document.getElementById('adminContent').style.display = currentUser.role === 'admin' ? 'block' : 'none';
-            document.getElementById('teacherContent').style.display = currentUser.role === 'teacher' ? 'block' : 'none';
-            document.getElementById('studentContent').style.display = currentUser.role === 'student' ? 'block' : 'none';
-        }
-
-        function openChangePasswordModal() {
-            document.getElementById('currentUserRole').value = currentUser.role;
-            new bootstrap.Modal(document.getElementById('changePasswordModal')).show();
-        }
-
-        function changePassword() {
-            const curr = document.getElementById('currentPassword').value;
-            const newVal = document.getElementById('newPassword').value;
-            if(curr === currentUser.password && newVal.length >= 6) {
-                users[currentUser.role].password = newVal;
-                currentUser.password = newVal;
-                saveUsers();
-                alert('Password Updated!');
-                bootstrap.Modal.getInstance(document.getElementById('changePasswordModal')).hide();
-            } else {
-                alert('Check your inputs!');
-            }
-        }
-
-        function logout() { location.reload(); }
-
-        function initCharts() {
-            const ctx = document.getElementById('attendanceChart')?.getContext('2d');
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                        datasets: [{ label: 'Attendance %', data: [95, 98, 92, 97, 99, 96], borderColor: '#10b981', tension: 0.4 }]
-                    }
-                });
-            }
-        }
-    </script>
+<div style="text-align:center; padding: 20px;">
+    <button onclick="emergencyReset()" class="btn btn-sm btn-outline-danger" style="opacity: 0.5;">
+        Android Reset: Restore Default Passwords
+    </button>
+</div>
+            
 </body>
 </html>
