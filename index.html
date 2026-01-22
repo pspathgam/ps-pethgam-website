@@ -383,498 +383,123 @@
                         <td>${s.class}</td>
                         <td>${age}</td>
                         <td>${s.parent}</td>
-                        <td><span class="status-${s.status.toLowerCase()}">${s.status}</span></td                <h2 style="margin-bottom: 25px; color: #2c3e50;">👥 Student Management</h2>
-                <div style="display: flex; gap: 15px; margin-bottom: 25px;">
-                    <div class="search-box">
-                        <span class="search-icon">🔍</span>
-                        <input type="text" id="studentSearch" placeholder="Search students by name, roll no, or class..." onkeyup="searchStudents()">
-                    </div>
-                    <button class="btn btn-primary" onclick="addStudent()">➕ Add New Student</button>
-                    <button class="btn btn-success" onclick="exportStudents()">📥 Export CSV</button>
-                </div>
-            </div>
-            <div id="studentsTable">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Roll No</th>
-                            <th>Photo</th>
-                            <th>Name</th>
-                            <th>Class</th>
-                            <th>DOB</th>
-                            <th>Parent Mobile</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="studentList">
-                        <!-- Students populated by JS -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Staff -->
-        <div id="staff" class="tab-content section">
-            <h2 style="margin-bottom: 25px; color: #2c3e50;">👩‍🏫 Staff Management</h2>
-            <div style="display: flex; gap: 15px; margin-bottom: 25px;">
-                <input type="text" placeholder="Search staff..." onkeyup="searchStaff()" style="flex: 1;">
-                <button class="btn btn-primary" onclick="addStaff()">➕ Add Staff</button>
-            </div>
-            <table>
-                <thead>
-                    <tr><th>ID</th><th>Name</th><th>Designation</th><th>Mobile</th><th>Salary</th><th>Status</th><th>Actions</th></tr>
-                </thead>
-                <tbody id="staffList">
-                    <!-- Staff data -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Attendance -->
-        <div id="attendance" class="tab-content section">
-            <h2 style="margin-bottom: 25px; color: #2c3e50;">📋 Attendance Management</h2>
-            <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
-                <select id="attendanceClass" style="flex: 1; min-width: 200px;">
-                    <option>Class Select</option>
-                    <option>1st</option>
-                    <option>2nd</option>
-                    <option>3rd</option>
-                    <option>4th</option>
-                    <option>5th</option>
-                </select>
-                <input type="date" id="attendanceDate" style="padding: 15px;">
-                <button class="btn btn-primary" onclick="loadAttendance()">Load Attendance</button>
-                <button class="btn btn-success" onclick="markPresentAll()">Present All</button>
-                <button class="btn btn-danger" onclick="markAbsentAll()">Absent All</button>
-                <button class="btn btn-primary" onclick="saveAttendance()">💾 Save</button>
-            </div>
-            <div id="attendanceTable">
-                <!-- Attendance table populated by JS -->
-            </div>
-        </div>
-
-        <!-- Fees -->
-        <div id="fees" class="tab-content section">
-            <h2 style="margin-bottom: 25px; color: #2c3e50;">💰 Fee Management</h2>
-            <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
-                <input type="text" placeholder="Search by student name/roll..." style="flex: 1;">
-                <button class="btn btn-primary" onclick="addFeePayment()">Record Payment</button>
-                <button class="btn btn-success" onclick="printReceipts()">Print Receipts</button>
-            </div>
-            <table>
-                <thead>
-                    <tr><th>Student</th><th>Class</th><th>Month</th><th>Amount</th><th>Paid</th><th>Balance</th><th>Status</th><th>Date</th></tr>
-                </thead>
-                <tbody id="feeList">
-                    <!-- Fee data -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Reports -->
-        <div id="reports" class="tab-content section">
-            <h2 style="margin-bottom: 25px; color: #2c3e50;">📈 Reports & Analytics</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>📊 Attendance Report</h3>
-                    <select onchange="generateReport('attendance')">
-                        <option>Select Month</option>
-                        <option>January 2026</option>
-                        <option>December 2025</option>
-                    </select>
-                    <button class="btn btn-primary">Generate PDF</button>
-                </div>
-                <div class="card">
-                    <h3>💰 Fee Collection</h3>
-                    <select onchange="generateReport('fees')">
-                        <option>Select Period</option>
-                        <option>This Month</option>
-                        <option>Last Quarter</option>
-                    </select>
-                    <button class="btn btn-primary">Download Excel</button>
-                </div>
-                <div class="card">
-                    <h3>📈 Student Analytics</h3>
-                    <button class="btn btn-primary" onclick="generateReport('students')">View Dashboard</button>
-                </div>
-                <div class="card">
-                    <h3>📋 Custom Reports</h3>
-                    <button class="btn btn-success">Staff Performance</button>
-                    <br><button class="btn btn-success">Class-wise Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add Student Modal -->
-    <div id="studentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 90%;">
-            <h3 style="margin-bottom: 25px;">➕ Add New Student</h3>
-            <form id="studentForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="studentName" required>
-                </div>
-                <div class="form-group">
-                    <label>Roll Number</label>
-                    <input type="text" id="studentRoll" required>
-                </div>
-                <div class="form-group">
-                    <label>Class</label>
-                    <select id="studentClass" required>
-                        <option>1st</option>
-                        <option>2nd</option>
-                        <option>3rd</option>
-                        <option>4th</option>
-                        <option>5th</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>DOB</label>
-                    <input type="date" id="studentDOB" required>
-                </div>
-                <div class="form-group">
-                    <label>Parent Mobile</label>
-                    <input type="tel" id="studentMobile" required>
-                </div>
-                <div style="display: flex; gap: 15px;">
-                    <button type="submit" class="btn btn-success">Save Student</button>
-                    <button type="button" class="btn btn-danger" onclick="closeModal()">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        // Sample Data
-        let students = [
-            {id: 1, roll: 'S001', name: 'Ahmed Hussain', class: '3rd', dob: '2018-05-12', mobile: '9876543210', photo: '👦', status: 'Active'},
-            {id: 2, roll: 'S002', name: 'Fatima Khan', class: '2nd', dob: '2019-03-20', mobile: '9876543211', photo: '👧', status: 'Active'},
-            {id: 3, roll: 'S003', name: 'Rahul Sharma', class: '4th', dob: '2017-11-08', mobile: '9876543212', photo: '👦', status: 'Active'}
-        ];
-        
-        let attendanceData = {};
-        let currentDate = new Date().toISOString().split('T')[0];
-
-        // Tab Navigation
-        function showTab(tabName) {
-            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-            
-            if (tabName === 'students') renderStudents();
-            if (tabName === 'attendance') loadAttendance();
+                        <td><span class="status-${s.status.toLowerCase()}">${s.status}</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-small" onclick="editStudent(${s.id})">Edit</button>
+                            <button class="btn btn-danger btn-small" onclick="deleteStudent(${s.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        // Student Management
-        function renderStudents() {
-            const tbody = document.getElementById('studentList');
-            tbody.innerHTML = students.map(student => `
+        // Staff
+        function renderStaff() {
+            const tbody = document.querySelector('#staffTable tbody');
+            tbody.innerHTML = appData.staff.map(s => `
                 <tr>
-                    <td>${student.roll}</td>
-                    <td>${student.photo}</td>
-                    <td>${student.name}</td>
-                    <td>${student.class}</td>
-                    <td>${student.dob}</td>
-                    <td>${student.mobile}</td>
-                    <td><span style="color: green;">${student.status}</span></td>
+                    <td>${s.id}</td>
+                    <td><strong>${s.name}</strong></td>
+                    <td>${s.role}</td>
+                    <td>${s.subject}</td>
+                    <td>${s.phone}</td>
                     <td>
-                        <button class="btn btn-primary" onclick="editStudent(${student.id})" style="padding: 8px 15px; font-size: 14px;">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteStudent(${student.id})" style="padding: 8px 15px; font-size: 14px;">Delete</button>
+                        <button class="btn btn-primary btn-small" onclick="editStaff(${s.id})">Edit</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteStaff(${s.id})">Delete</button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function addStudent() {
-            document.getElementById('studentModal').style.display = 'block';
+        // Attendance  
+        function renderAttendance() {
+            const today = new Date().toISOString().split('T')[0];
+            const tbody = document.querySelector('#attendanceTable tbody');
+            const students = appData.students.map(s => {
+                const att = appData.attendance.find(a => a.studentId === s.id && a.date === today);
+                return {...s, status: att ? att.status : 'Pending'};
+            });
+            
+            tbody.innerHTML = students.map(s => `
+                <tr>
+                    <td>${s.name}</td>
+                    <td>${s.class}</td>
+                    <td>
+                        <span class="status-${s.status.toLowerCase()}">${s.status}</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-success btn-small" onclick="markAttendance(${s.id}, 'Present')">Present</button>
+                        <button class="btn btn-danger btn-small" onclick="markAttendance(${s.id}, 'Absent')">Absent</button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        document.getElementById('studentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const newStudent = {
-                id: students.length + 1,
-                roll: document.getElementById('studentRoll').value,
-                name: document.getElementById('studentName').value,
-                class: document.getElementById('studentClass').value,
-                dob: document.getElementById('studentDOB').value,
-                mobile: document.getElementById('studentMobile').value,
-                photo: '👤',
+        // Modal Functions
+        function showAddStudentModal() { document.getElementById('addStudentModal').style.display = 'block'; }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        
+        function saveStudent() {
+            const nextId = Math.max(...appData.students.map(s => s.id), 0) + 1;
+            const student = {
+                id: nextId,
+                name: document.getElementById('sName').value,
+                class: document.getElementById('sClass').value,
+                dob: document.getElementById('sDob').value,
+                parent: document.getElementById('sParent').value,
                 status: 'Active'
             };
-            students.push(newStudent);
-            document.getElementById('studentModal').style.display = 'none';
+            appData.students.push(student);
+            saveData();
+            closeModal('addStudentModal');
             renderStudents();
-            document.getElementById('studentForm').reset();
-            showAlert('Student added successfully!', 'success');
-            updateDashboardStats();
-        });
-
-        function closeModal() {
-            document.getElementById('studentModal').style.display = 'none';
+            alert('✅ Student added successfully!');
         }
 
+        // Action Functions
         function deleteStudent(id) {
-            if (confirm('Are you sure you want to delete this student?')) {
-                students = students.filter(s => s.id !== id);
+            if (confirm('Delete this student?')) {
+                appData.students = appData.students.filter(s => s.id !== id);
+                saveData();
                 renderStudents();
-                updateDashboardStats();
             }
         }
 
-        // Search
-        function searchStudents() {
-            const query = document.getElementById('studentSearch').value.toLowerCase();
-            const filtered = students.filter(s => 
-                s.name.toLowerCase().includes(query) || 
-                s.roll.toLowerCase().includes(query) || 
-                s.class.toLowerCase().includes(query)
-            );
-            const tbody = document.getElementById('studentList');
-            tbody.innerHTML = filtered.map(s => `
-                <tr>
-                    <td>${s.roll}</td>
-                    <td>${s.photo}</td>
-                    <td>${s.name}</td>
-                    <td>${s.class}</td>
-                    <td>${s.dob}</td>
-                    <td>${s.mobile}</td>
-                    <td><span style="color: green;">${s.status}</span></td>
-                    <td>
-                        <button class="btn btn-primary" style="padding: 8px 15px; font-size: 14px;">Edit</button>
-                        <button class="btn btn-danger" style="padding: 8px 15px; font-size: 14px;">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
+        function markAttendance(id, status) {
+            const today = new Date().toISOString().split('T')[0];
+            const existing = appData.attendance.find(a => a.studentId === id && a.date === today);
+            if (existing) existing.status = status;
+            else appData.attendance.push({studentId: id, date: today, status});
+            saveData();
+            renderAttendance();
         }
 
-        // Attendance Management        .btn-danger { background: var(--danger); color: white; }
-        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-        
-        /* Responsive */
-        @media (max-width: 768px) { .main-content { padding: 16px; } .card { padding: 20px; } }
-        
-        /* Loading */
-        .loading { display: none; text-align: center; padding: 40px; }
-        .spinner { border: 3px solid #e2e8f0; border-top: 3px solid var(--primary); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
-    <div class="app-shell">
-        <!-- Header -->
-        <header class="app-header">
-            <button class="menu-toggle" onclick="toggleDrawer()">☰</button>
-            <div class="app-title">SchoolPro ERP</div>
-        </header>
-        
-        <!-- Navigation Drawer -->
-        <nav class="nav-drawer" id="navDrawer">
-            <div class="nav-header">
-                <h3>Government School</h3>
-                <p>Admin Dashboard</p>
-            </div>
-            <div class="nav-menu">
-                <div class="nav-item active" onclick="switchPage('dashboard')">
-                    <span>📊</span> Dashboard
-                </div>
-                <div class="nav-item" onclick="switchPage('students')">
-                    <span>👥</span> Students
-                </div>
-                <div class="nav-item" onclick="switchPage('staff')">
-                    <span>👨‍🏫</span> Staff
-                </div>
-                <div class="nav-item" onclick="switchPage('attendance')">
-                    <span>📅</span> Attendance
-                </div>
-                <div class="nav-item" onclick="switchPage('exams')">
-                    <span>📚</span> Exams
-                </div>
-                <div class="nav-item" onclick="switchPage('timetable')">
-                    <span>⏰</span> Timetable
-                </div>
-                <div class="nav-item" onclick="switchPage('reports')">
-                    <span>📋</span> Reports
-                </div>
-            </div>
-        </nav>
-        
-        <!-- Overlay -->
-        <div class="overlay" id="overlay" onclick="toggleDrawer()" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 150;"></div>
-        
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Dashboard -->
-            <div id="dashboard" class="page active">
-                <div class="card">
-                    <h2>📊 Quick Stats</h2>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-number" id="totalStudents">145</div>
-                            <div>Total Students</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="totalStaff">12</div>
-                            <div>Total Staff</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="todayAttendance">94%</div>
-                            <div>Today's Attendance</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number" id="totalExams">8</div>
-                            <div>Exams Scheduled</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Students Page -->
-            <div id="students" class="page">
-                <div class="card">
-                    <h2>👥 Students (145)</h2>
-                    <div style="margin-bottom: 20px;">
-                        <input type="text" class="form-input" placeholder="🔍 Search students..." id="studentSearch">
-                        <div style="margin-top: 10px; display: flex; gap: 10px;">
-                            <button class="btn btn-primary" onclick="showAddStudentModal()">➕ Add Student</button>
-                            <button class="btn btn-success" onclick="bulkImportStudents()">📥 Bulk Import</button>
-                        </div>
-                    </div>
-                    <div class="loading" id="studentLoading"><div class="spinner"></div>Loading...</div>
-                    <table id="studentsTable">
-                        <thead>
-                            <tr><th>ID</th><th>Name</th><th>Class</th><th>Age</th><th>Parent</th><th>Status</th><th></th></tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Other pages follow same pattern... -->
-        </main>
-        
-        <!-- FAB -->
-        <button class="fab" onclick="showAddStudentModal()">➕</button>
-        
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <div class="nav-tab active" onclick="switchPage('dashboard')">
-                <i>📊</i>Dashboard
-            </div>
-            <div class="nav-tab" onclick="switchPage('attendance')">
-                <i>📅</i>Attendance
-            </div>
-            <div class="nav-tab" onclick="switchPage('students')">
-                <i>👥</i>Students
-            </div>
-            <div class="nav-tab" onclick="switchPage('reports')">
-                <i>📋</i>Reports
-            </div>
-        </nav>
-    </div>
+        function markAllPresent() {
+            appData.students.forEach(s => markAttendance(s.id, 'Present'));
+        }
+        function markAllAbsent() {
+            appData.students.forEach(s => markAttendance(s.id, 'Absent'));
+        }
 
-    <script>
-        // Install PWA
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            deferredPrompt = e;
+        // Reports
+        function generateAttendanceReport() {
+            document.getElementById('reportPreview').innerHTML = `
+                <h3>📊 Attendance Report - ${new Date().toLocaleDateString()}</h3>
+                <p>Total Students: ${appData.students.length}</p>
+                <p>Present: ${appData.attendance.filter(a => a.status === 'Present').length}</p>
+            `;
+        }
+
+        // Search
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('studentSearch').addEventListener('input', (e) => {
+                renderStudents(e.target.value);
+            });
         });
 
-        // Data Management (IndexedDB for production, localStorage for demo)
-        const DB_NAME = 'SchoolProDB';
-        const STORES = {
-            students: '++id,name,class,dob,parent,status',
-            staff: '++id,name,role,phone,subject',
-            attendance: '++id,studentId,date,status',
-            exams: '++id,name,date,class',
-            timetable: 'day,period,subject,teacher'
-        };
-
-        // Initialize app data
-        const sampleStudents = [
-            {id:1,name:"Rahul Sharma",class:"5A",dob:"2015-03-12",parent:"Suresh Sharma",status:"Active"},
-            {id:2,name:"Priya Patel",class:"5A",dob:"2015-06-18",parent:"Meena Patel",status:"Active"}
-        ];
-        
-        // Navigation
-        function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item, .nav-tab').forEach(n => n.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.querySelector(`[onclick="switchPage('${pageId}')"]`).classList.add('active');
-            document.querySelectorAll('.bottom-nav .nav-tab')[['dashboard','attendance','students','reports'].indexOf(pageId)].classList.add('active');
-            
-            if (pageId === 'students') renderStudents();
-            if (pageId === 'dashboard') updateDashboard();
-        }
-        
-        function toggleDrawer() {
-            const drawer = document.getElementById('navDrawer');
-            const overlay = document.getElementById('overlay');
-            drawer.classList.toggle('open');
-            overlay.style.display = drawer.classList.contains('open') ? 'block' : 'none';
-        }
-        
-        // Students Management
-        async function renderStudents(filter = '') {
-            const tbody = document.querySelector('#studentsTable tbody');
-            const loading = document.getElementById('studentLoading');
-            
-            loading.style.display = 'block';
-            await new Promise(r => setTimeout(r, 500)); // Simulate loading
-            
-            // Filter and render students
-            const students = sampleStudents.filter(s => 
-                s.name.toLowerCase().includes(filter.toLowerCase())
-            );
-            
-            tbody.innerHTML = students.map(student => `
-                <tr>
-                    <td>${student.id}</td>
-                    <td><strong>${student.name}</strong></td>
-                    <td>${student.class}</td>
-                    <td>${Math.floor((new Date() - new Date(student.dob)) / 31536000000)}</td>
-                    <td>${student.parent}</td>
-                    <td>
-                        <span class="btn btn-success btn" style="padding: 4px 12px; font-size: 12px;">${student.status}</span>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" style="padding: 6px 12px;" onclick="editStudent(${student.id})">Edit</button>
-                        <button class="btn btn-danger" style="padding: 6px 12px;" onclick="deleteStudent(${student.id})">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-            
-            loading.style.display = 'none';
-            document.getElementById('studentSearch').oninput = (e) => renderStudents(e.target.value);
-        }
-        
-        function showAddStudentModal() {
-            // Full modal implementation with form validation
-            alert('✅ Add Student Modal - Fully functional form with validation
-
-Name, Class, DOB, Parent Contact
-Auto ID generation
-Real-time validation
-Save to IndexedDB');
-        }
-        
-        // Dashboard update
-        function updateDashboard() {
-            document.getElementById('totalStudents').textContent = sampleStudents.length;
-            document.getElementById('todayAttendance').textContent = '94%';
-        }
-        
         // Initialize
         updateDashboard();
         renderStudents();
-        
-        // Search functionality
-        document.getElementById('studentSearch')?.addEventListener('input', (e) => {
-            renderStudents(e.target.value);
-        });
     </script>
 </body>
-</html>                    
+</html>
